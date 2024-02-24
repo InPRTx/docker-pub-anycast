@@ -54,5 +54,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 100.64.0.1/31
+        - subnet: 100.64.0.1/30
         - subnet: fe80::/64
