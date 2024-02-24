@@ -50,6 +50,7 @@ networks:
     internal: true
     driver_opts:
       com.docker.network.bridge.name: "br-bgp"
+      com.docker.network.bridge.enable_icc: "true"
     ipam:
       driver: default
       config:
