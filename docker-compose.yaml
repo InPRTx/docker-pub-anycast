@@ -34,12 +34,20 @@ services:
       - ./run/bird:/run/bird
     cap_add:
       - NET_ADMIN
+  pub-anycast-dnsmasq:
+    container_name: pub-anycast-dnsmasq
+    build: .
+    command: /usr/sbin/dnsmasq -d
+    restart: unless-stopped
+    network_mode: service:pub-anycast
+    volumes:
+      - ./dnsmasq.d:/etc/dnsmasq.d
 
 networks:
   host_bridge:
     driver: bridge
     enable_ipv6: true
-    internal: false
+    internal: true
     driver_opts:
       com.docker.network.bridge.name: "br-bgp"
     ipam:
