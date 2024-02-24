@@ -4,12 +4,16 @@ services:
     container_name: pub-anycast
     build: .
     restart: unless-stopped
+    command: /usr/local/bin/init.sh
     tty: true
     networks:
       host_bridge:
         ipv6_address: fe80::21:2623:53
     volumes:
       - ./run/bird:/run/bird
+    dns:
+      - ::1
+      - 127.0.0.1
   pub-anycast-bird:
     container_name: pub-anycast-bird
     build: .
@@ -17,7 +21,6 @@ services:
     restart: unless-stopped
     network_mode: service:pub-anycast
     volumes:
-      - ./bird.conf:/etc/bird/bird.conf
       - ./run/bird:/run/bird
 
 networks:
