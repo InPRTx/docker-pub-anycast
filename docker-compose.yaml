@@ -1,0 +1,34 @@
+version: "3.4"
+services:
+  pub-anycast:
+    container_name: pub-anycast
+    build: .
+    restart: unless-stopped
+    tty: true
+    networks:
+      host_bridge:
+        ipv6_address: fe80::21:2623:53
+    volumes:
+      - ./run/bird:/run/bird
+  pub-anycast-bird:
+    container_name: pub-anycast-bird
+    build: .
+    command: [ "bird -d" ]
+    restart: unless-stopped
+    network_mode: service:pub-anycast
+    volumes:
+      - ./bird.conf:/etc/bird/bird.conf
+      - ./run/bird:/run/bird
+
+networks:
+  host_bridge:
+    driver: bridge
+    enable_ipv6: true
+    internal: false
+    driver_opts:
+      com.docker.network.bridge.name: "br-bgp"
+    ipam:
+      driver: default
+      config:
+        - subnet: 100.64.0.1/24
+        - subnet: fe80::/64
