@@ -1,0 +1,71 @@
+version: "3.4"
+services:
+  pub-anycast:
+    container_name: pub-anycast
+    build: .
+    restart: unless-stopped
+    tty: true
+    networks:
+      host_bridge:
+        ipv4_address: 100.64.0.2
+        ipv6_address: fe80::21:2623:53
+    volumes:
+      - ./run/bird:/run/bird
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+    dns:
+      - ::1
+      - 127.0.0.1
+    cap_add: # 并没有程序托管，默认的cli容器，做管理的时候会造成点麻烦
+      - NET_ADMIN
+  pub-anycast-update: # 独立开来为了更新容器的时候不影响其他容器
+    container_name: pub-anycast-update
+    build: .
+    restart: unless-stopped
+    command: /usr/local/bin/update.sh
+    network_mode: service:pub-anycast
+    depends_on:
+      - pub-anycast
+    volumes:
+      - ./run/bird:/run/bird
+    cap_add:
+      - NET_ADMIN
+  pub-anycast-bird:
+    container_name: pub-anycast-bird
+    build: .
+    command: /sbin/bird -d
+    restart: unless-stopped
+    network_mode: service:pub-anycast
+    volumes:
+      - ./run/bird:/run/bird
+    depends_on:
+      - pub-anycast
+      - pub-anycast-update
+    cap_add:
+      - NET_ADMIN
+  pub-anycast-dnsmasq:
+    container_name: pub-anycast-dnsmasq
+    build: .
+    command: /usr/sbin/dnsmasq -d
+    restart: unless-stopped
+    network_mode: service:pub-anycast
+    depends_on:
+      - pub-anycast
+      - pub-anycast-update
+      - pub-anycast-bird
+    volumes:
+      - ./dnsmasq.d:/etc/dnsmasq.d
+
+networks:
+  host_bridge:
+    driver: bridge
+    enable_ipv6: true
+    internal: false # 不可以设置为true，桥接网卡的fe80都不通了
+    driver_opts:
+      com.docker.network.bridge.name: "br-bgp"
+      com.docker.network.bridge.enable_icc: "true"
+    ipam:
+      driver: default
+      config:
+        - subnet: 100.64.0.1/30
+        - subnet: fe80::/64
