@@ -13,7 +13,7 @@ services:
   pub-anycast-bird:
     container_name: pub-anycast-bird
     build: .
-    command: [ "/sbin/bird -d" ]
+    command: /sbin/bird -d
     restart: unless-stopped
     network_mode: service:pub-anycast
     volumes:
