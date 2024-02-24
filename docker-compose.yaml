@@ -15,6 +15,7 @@ services:
       - net.ipv6.conf.all.disable_ipv6=0
     dns:
       - ::1
+      - 127.0.0.1
     cap_add: # 并没有程序托管，默认的cli容器，做管理的时候会造成点麻烦
       - NET_ADMIN
   pub-anycast-update:
