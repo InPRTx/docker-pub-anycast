@@ -15,6 +15,8 @@ services:
       - net.ipv6.conf.all.disable_ipv6=0
     dns:
       - ::1
+    cap_add: # 并没有程序托管，默认的cli容器，做管理的时候会造成点麻烦
+      - NET_ADMIN
   pub-anycast-update:
     container_name: pub-anycast-update
     build: .
@@ -47,7 +49,7 @@ networks:
   host_bridge:
     driver: bridge
     enable_ipv6: true
-    internal: true
+    internal: false # 不可以设置为true，桥接网卡的fe80都不通了
     driver_opts:
       com.docker.network.bridge.name: "br-bgp"
       com.docker.network.bridge.enable_icc: "true"
