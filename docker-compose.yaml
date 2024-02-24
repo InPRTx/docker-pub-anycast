@@ -18,11 +18,14 @@ services:
       - 127.0.0.1
     cap_add: # 并没有程序托管，默认的cli容器，做管理的时候会造成点麻烦
       - NET_ADMIN
-  pub-anycast-update:
+  pub-anycast-update: # 独立开来为了更新容器的时候不影响其他容器
     container_name: pub-anycast-update
     build: .
+    restart: unless-stopped
     command: /usr/local/bin/update.sh
     network_mode: service:pub-anycast
+    depends_on:
+      - pub-anycast
     volumes:
       - ./run/bird:/run/bird
     cap_add:
@@ -35,6 +38,9 @@ services:
     network_mode: service:pub-anycast
     volumes:
       - ./run/bird:/run/bird
+    depends_on:
+      - pub-anycast
+      - pub-anycast-update
     cap_add:
       - NET_ADMIN
   pub-anycast-dnsmasq:
@@ -43,6 +49,10 @@ services:
     command: /usr/sbin/dnsmasq -d
     restart: unless-stopped
     network_mode: service:pub-anycast
+    depends_on:
+      - pub-anycast
+      - pub-anycast-update
+      - pub-anycast-bird
     volumes:
       - ./dnsmasq.d:/etc/dnsmasq.d
 
