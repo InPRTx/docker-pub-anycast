@@ -4,7 +4,6 @@ services:
     container_name: pub-anycast
     build: .
     restart: unless-stopped
-    command: /usr/local/bin/init.sh
     tty: true
     networks:
       host_bridge:
@@ -16,6 +15,13 @@ services:
     dns:
       - ::1
       - 127.0.0.1
+  pub-anycast-update:
+    container_name: pub-anycast-update
+    build: .
+    command: /usr/local/bin/update.sh
+    network_mode: service:pub-anycast
+    volumes:
+      - ./run/bird:/run/bird
     cap_add:
       - NET_ADMIN
   pub-anycast-bird:
