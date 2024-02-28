@@ -1,9 +1,7 @@
 #!/usr/bin/env sh
 ip link add dummydn42 type dummy || true
-ip addr add 172.20.197.176/32 dev dummydn42 || true
-ip addr add 172.20.197.177/32 dev dummydn42 || true
-ip addr add 172.20.197.178/32 dev dummydn42 || true
-ip addr add 172.20.197.179/32 dev dummydn42 || true
+ip addr add 172.20.229.221/32 dev dummydn42 || true
+ip addr add 172.20.229.222/32 dev dummydn42 || true
 ip addr add fdf4:56da:a360::/128 dev dummydn42 || true
 ip addr add fdf4:56da:a360::1/128 dev dummydn42 || true
 ip addr add fdf4:56da:a360::2/128 dev dummydn42 || true
