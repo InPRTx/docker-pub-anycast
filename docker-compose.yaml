@@ -8,7 +8,7 @@ services:
     networks:
       host_bridge:
         ipv4_address: 100.64.0.2
-        ipv6_address: fe80::21:2623:53
+        ipv6_address: fd5f:4366:7556:ac7b:eafe:f52a:ac7b:2
     volumes:
       - ./run/bird:/run/bird
     sysctls:
@@ -63,9 +63,8 @@ networks:
     internal: false # 不可以设置为true，桥接网卡的fe80都不通了
     driver_opts:
       com.docker.network.bridge.name: "br-bgp"
-      com.docker.network.bridge.enable_icc: "true"
     ipam:
       driver: default
       config:
         - subnet: 100.64.0.1/30
-        - subnet: fe80::/64
+        - subnet: fd5f:4366:7556:ac7b:eafe:f52a:ac7b::/126

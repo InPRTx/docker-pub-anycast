@@ -13,6 +13,7 @@ ip addr add 2a13:b487:4200::1/128 dev dunmmypub || true
 ip addr add 2a13:b487:4200::2/128 dev dunmmypub || true
 ip addr add 2a13:b487:4200::3/128 dev dunmmypub || true
 ip link set dunmmypub up || true
+ip addr add fe80::21:2623:53/64 dev eth0 || true
 sleep 2
 ip addr del 100.64.0.2/30 dev eth0 || true
 while true; do
