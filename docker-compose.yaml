@@ -7,7 +7,7 @@ services:
     tty: true
     networks:
       host_bridge:
-        ipv4_address: 100.64.0.2
+        ipv4_address: 10.253.169.2
         ipv6_address: fe80::21:2623:53
     volumes:
       - ./run/bird:/run/bird
@@ -67,5 +67,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 100.64.0.1/30
+        - subnet: 10.253.169.1/30
         - subnet: fe80::/64
