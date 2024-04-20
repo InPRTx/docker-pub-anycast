@@ -54,7 +54,16 @@ services:
       - pub-anycast-update
       - pub-anycast-bird
     volumes:
-      - ./dnsmasq.d:/etc/dnsmasq.d
+      - /root/auto_boot/pubic_dn42_network/config/dnsmasq.d:/etc/dnsmasq.d
+  pub-anycast-nginx:
+    container_name: pub-anycast-nginx
+    image: nginx
+    network_mode: service:pub-anycast
+    depends_on:
+      - pub-anycast
+    volumes:
+      - /root/auto_boot/pubic_dn42_network/config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /root/auto_boot/pubic_dn42_network/config/nginx/conf.d:/etc/nginx/conf.d
 
 networks:
   host_bridge:
