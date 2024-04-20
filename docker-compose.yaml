@@ -57,7 +57,7 @@ services:
       - /root/auto_boot/pubic_dn42_network/config/dnsmasq.d:/etc/dnsmasq.d
   pub-anycast-nginx:
     container_name: pub-anycast-nginx
-    image: nginx
+    image: docker.io/library/nginx
     network_mode: service:pub-anycast
     depends_on:
       - pub-anycast

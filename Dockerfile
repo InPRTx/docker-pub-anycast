@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM docker.io/library/debian:bookworm-slim
 
 RUN echo 'Package: *\n\
 Pin: release o=Debian,a=unstable,n=sid\n\
