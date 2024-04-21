@@ -16,6 +16,7 @@ ip link set dunmmypub up || true
 sleep 2
 ip addr del 10.253.169.2/30 dev eth0 || true
 ip addr add fe80::21:2623:53/64 dev eth0 || true
+echo -e "nameserver ::1\nnameserver 127.0.0.1" | tee /etc/resolv.conf > /dev/null
 while true; do
     sleep 3600
 done
