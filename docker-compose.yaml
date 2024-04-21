@@ -13,6 +13,7 @@ services:
       - ./run/bird:/run/bird
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
+    privileged: true
     dns:
       - ::1
       - 127.0.0.1
@@ -24,6 +25,7 @@ services:
     restart: unless-stopped
     command: /usr/local/bin/update.sh
     network_mode: service:pub-anycast
+    privileged: true
     depends_on:
       - pub-anycast
     volumes:
@@ -36,6 +38,7 @@ services:
     command: /sbin/bird -d
     restart: unless-stopped
     network_mode: service:pub-anycast
+    privileged: true
     volumes:
       - ./run/bird:/run/bird
     depends_on:
