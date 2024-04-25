@@ -57,7 +57,7 @@ services:
       - pub-anycast-update
       - pub-anycast-bird
     volumes:
-      - /root/auto_boot/pubic_dn42_network/config/dnsmasq.d:/etc/dnsmasq.d
+      - /root/auto_boot/pubic_dn42_network/config/anycast/dnsmasq.d:/etc/dnsmasq.d
   pub-anycast-nginx:
     container_name: pub-anycast-nginx
     image: docker.io/library/nginx
@@ -65,8 +65,8 @@ services:
     depends_on:
       - pub-anycast
     volumes:
-      - /root/auto_boot/pubic_dn42_network/config/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /root/auto_boot/pubic_dn42_network/config/nginx/conf.d:/etc/nginx/conf.d
+      - /root/auto_boot/pubic_dn42_network/config/anycast/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /root/auto_boot/pubic_dn42_network/config/anycast/nginx/conf.d:/etc/nginx/conf.d
 
 networks:
   host_bridge:
