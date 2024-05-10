@@ -69,7 +69,7 @@ services:
     volumes:
       - /root/auto_boot/pubic_dn42_network/config/anycast/caddy/:/etc/caddy/
   pub-anycast-bird-lg:
-    image: xddxdd/bird-lg-go:latest
+    image: docker.io/xddxdd/bird-lg-go:latest
     container_name: bird-lg
     restart: always
     environment:
